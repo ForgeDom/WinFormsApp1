@@ -46,14 +46,34 @@ namespace WinFormsApp1
             adapter.SelectCommand = command;
             adapter.Fill(table);
 
-            if(table.Rows.Count > 0)
+            if (table.Rows.Count > 0)
             {
-                MessageBox.Show("Yes");
+                MySqlCommand commandDelete = new MySqlCommand("DELETE * FROM 'current_table'", dataBase.GetConnection());
+                adapter.SelectCommand = commandDelete;
+                MySqlCommand commandCurrentUser = new MySqlCommand("INSERT INTO 'current_table' (current_user) VALUES (@cU)", dataBase.GetConnection());
+                command.Parameters.Add("cU", MySqlDbType.VarChar).Value = loginUser;
+                adapter.SelectCommand = commandCurrentUser;
+                this.Hide();
+                MainForm mainForm = new MainForm();
+                mainForm.Show();
             }
             else
             {
-                MessageBox.Show("No");
+                MessageBox.Show("All spaces should be full");
             }
+            
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void registerlabel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            RegisterForm registerForm = new RegisterForm();
+            registerForm.Show();
         }
     }
 }

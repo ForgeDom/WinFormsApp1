@@ -23,8 +23,32 @@ namespace WinFormsApp1
 
         }
 
+
         private void buttonRegister_Click(object sender, EventArgs e)
         {
+            if (userNameField.Text == "")
+            {
+                MessageBox.Show("Всі пункти мають бути заповнені");
+                return;
+            }
+            if (userSurnameField.Text == "")
+            {
+                MessageBox.Show("Всі пункти мають бути заповнені");
+                return;
+            }
+            if (loginField.Text == "")
+            {
+                MessageBox.Show("Всі пункти мають бути заповнені");
+                return;
+            }
+            if (passField.Text == "")
+            {
+                MessageBox.Show("Всі пункти мають бути заповнені");
+                return;
+            }
+
+            if (isUserExists())
+                return;
             DataBase dataBase = new DataBase();
             MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`login`, `pass`, `name`, `surname`) VALUES (@login,@pass,@name,@surname)", dataBase.GetConnection());
             command.Parameters.Add("@login", MySqlDbType.VarChar).Value = loginField.Text;
@@ -45,9 +69,36 @@ namespace WinFormsApp1
             dataBase.closeConnection();
         }
 
-        private void passField_TextChanged(object sender, EventArgs e)
+        public Boolean isUserExists()
         {
+            DataBase dataBase = new DataBase();
 
+            DataTable table = new DataTable();
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand("SELECT * FROM `users` WHERE `login` = @uL", dataBase.GetConnection());
+            command.Parameters.Add("uL", MySqlDbType.VarChar).Value = loginField.Text;
+
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+
+            if (table.Rows.Count > 0)
+            {
+                MessageBox.Show("Такий користувач вже існує, змініть логін");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void signinlabel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
         }
     }
 }

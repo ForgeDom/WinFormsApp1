@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            signinlabel = new Label();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             loginField = new TextBox();
@@ -47,6 +48,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Menu;
+            panel1.Controls.Add(signinlabel);
             panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(loginField);
@@ -60,6 +62,18 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(784, 561);
             panel1.TabIndex = 1;
+            // 
+            // signinlabel
+            // 
+            signinlabel.AutoSize = true;
+            signinlabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            signinlabel.ForeColor = SystemColors.AppWorkspace;
+            signinlabel.Location = new Point(352, 392);
+            signinlabel.Name = "signinlabel";
+            signinlabel.Size = new Size(93, 15);
+            signinlabel.TabIndex = 8;
+            signinlabel.Text = "Go to signing in";
+            signinlabel.Click += signinlabel_Click;
             // 
             // pictureBox2
             // 
@@ -164,6 +178,7 @@
             ClientSize = new Size(784, 561);
             Controls.Add(panel1);
             Name = "RegisterForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Sign Up";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -186,5 +201,6 @@
         private Label label2;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
+        private Label signinlabel;
     }
 }
